@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Bar } from 'react-chartjs-2';
 
 const Charts = () => {
-    const data = {
+
+    const data = useMemo(() => ({
         labels: ['Room A', 'Room B', 'Room C', 'Room D'],
         datasets: [
             {
@@ -13,18 +14,25 @@ const Charts = () => {
                 borderWidth: 1,
             },
         ],
-    };
+    }), []);
 
-    const options = {
+    const options = useMemo(() => ({
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             y: {
                 beginAtZero: true,
             },
         },
-    };
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+        },
+    }), []);
 
     return (
-        <div>
+        <div style={{ width: '100%', height: '400px' }}>
             <h2>Room Usage Analytics</h2>
             <Bar data={data} options={options} />
         </div>
