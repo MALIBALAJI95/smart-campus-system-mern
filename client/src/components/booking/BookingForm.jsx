@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 const BookingForm = () => {
     const [eventName, setEventName] = useState('');
     const [participants, setParticipants] = useState('');
     const [duration, setDuration] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
         // Handle form submission logic here
-    };
+    }, []);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -22,6 +22,7 @@ const BookingForm = () => {
                     required
                 />
             </div>
+
             <div>
                 <label htmlFor="participants">Participants:</label>
                 <input
@@ -32,6 +33,7 @@ const BookingForm = () => {
                     required
                 />
             </div>
+
             <div>
                 <label htmlFor="duration">Duration (hours):</label>
                 <input
@@ -42,6 +44,7 @@ const BookingForm = () => {
                     required
                 />
             </div>
+
             <button type="submit">Book Room</button>
         </form>
     );

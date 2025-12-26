@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar as AntCalendar } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -20,15 +20,19 @@ const Calendar = () => {
         fetchAvailableDates();
     }, []);
 
-    const dateCellRender = (value) => {
-        const dateString = value.format('YYYY-MM-DD');
-        const isAvailable = availableDates.includes(dateString);
-        return (
-            <div className={isAvailable ? 'available' : 'unavailable'}>
-                {isAvailable ? 'Available' : 'Unavailable'}
-            </div>
-        );
-    };
+    const dateCellRender = useCallback(
+        (value) => {
+            const dateString = value.format('YYYY-MM-DD');
+            const isAvailable = availableDates.includes(dateString);
+
+            return (
+                <div className={isAvailable ? 'available' : 'unavailable'}>
+                    {isAvailable ? 'Available' : 'Unavailable'}
+                </div>
+            );
+        },
+        [availableDates]
+    );
 
     return (
         <div>
