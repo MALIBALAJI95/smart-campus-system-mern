@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 const RequestForm = () => {
     const [itemName, setItemName] = useState('');
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Logic to handle the request submission
-        console.log('Request submitted:', { itemName, quantity, description });
-    };
+    const handleSubmit = useCallback(
+        (e) => {
+            e.preventDefault();
+            // Logic to handle the request submission
+            console.log('Request submitted:', {
+                itemName,
+                quantity,
+                description,
+            });
+        },
+        [itemName, quantity, description]
+    );
 
     return (
         <form onSubmit={handleSubmit}>
@@ -23,6 +30,7 @@ const RequestForm = () => {
                     required
                 />
             </div>
+
             <div>
                 <label htmlFor="quantity">Quantity:</label>
                 <input
@@ -33,6 +41,7 @@ const RequestForm = () => {
                     required
                 />
             </div>
+
             <div>
                 <label htmlFor="description">Description:</label>
                 <textarea
@@ -41,7 +50,10 @@ const RequestForm = () => {
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <button type="submit">Submit Request</button>
+
+            <button type="submit">
+                Submit Request
+            </button>
         </form>
     );
 };
