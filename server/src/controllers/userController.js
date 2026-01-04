@@ -5,17 +5,21 @@ const jwt = require('jsonwebtoken');
 exports.loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+
         // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({
+                message: 'Invalid email or password',
+            });
         }
 
         // Check password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({
+                message: 'Invalid email or password',
+            });
         }
 
         // Generate JWT token
@@ -25,16 +29,18 @@ exports.loginUser = async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.json({
+        return res.json({
             token,
             user: {
                 id: user._id,
                 email: user.email,
-                role: user.role
-            }
+                role: user.role,
+            },
         });
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ message: 'Server error' });
+        return res.status(500).json({
+            message: 'Server error',
+        });
     }
 };
