@@ -30,7 +30,7 @@ const maintenanceSchema = new mongoose.Schema({
     },
 });
 
-maintenanceSchema.pre('save', function(next) {
+maintenanceSchema.pre('save', function (next) {
     this.updatedAt = Date.now();
     next();
 });
