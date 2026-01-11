@@ -1,18 +1,18 @@
 const nodemailer = require('nodemailer');
 
-// Create a transporter for sending emails
+// Email Transporter
 const transporter = nodemailer.createTransport({
-    service: 'Gmail', // Use your email service
+    service: 'Gmail',
     auth: {
-        user: process.env.EMAIL_USER, // Your email
-        pass: process.env.EMAIL_PASS, // Your email password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
     },
 });
 
-// Function to send notifications via email
+// Send Email Notification
 const sendEmailNotification = (to, subject, text) => {
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: `"Room Management System" <${process.env.EMAIL_USER}>`,
         to,
         subject,
         text,
@@ -20,26 +20,26 @@ const sendEmailNotification = (to, subject, text) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.error('Error sending email:', error);
+            console.error('❌ Email failed:', error);
         } else {
-            console.log('Email sent:', info.response);
+            console.log('✅ Email sent:', info.response);
         }
     });
 };
 
-// Function to create a notification object
+// Create Notification Object
 const createNotification = (userId, message) => {
     return {
         userId,
         message,
         timestamp: new Date(),
+        status: 'unread',
     };
 };
 
-// Function to send push notifications (placeholder for future implementation)
+// Send Push Notification (placeholder)
 const sendPushNotification = (userId, message) => {
-    // Implementation for sending push notifications goes here
-    console.log(`Push notification sent to ${userId}: ${message}`);
+    console.log(`🔔 Push notification sent to ${userId}: ${message}`);
 };
 
 module.exports = {
